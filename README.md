@@ -232,8 +232,3 @@ Kontribusi berupa perbaikan materi, penambahan tips, atau penyempurnaan kode sel
 4. Push ke branch Anda (`git push origin fitur/materi-baru`).
 5. Buat **Pull Request** baru di repositori utama.
 
----
-
-## 📄 Lisensi
-
-Proyek ini dirilis di bawah lisensi [MIT License](LICENSE). Bebas digunakan, dimodifikasi, dan disebarluaskan untuk tujuan edukasi.
