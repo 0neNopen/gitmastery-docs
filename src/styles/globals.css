@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/**
+ * Color tokens live here, not scattered across Tailwind config or
+ * components — this is the only file a theme change ever touches.
+ *
+ * `:root` is the new light theme, tuned for WCAG AA contrast.
+ * `.dark` is the original approved dark theme, values unchanged from
+ * before dark mode existed — nothing about the existing visual
+ * identity moves when dark mode is active.
+ *
+ * `--primary`, `--primary-foreground`, and the four `--accent-*` hues
+ * are intentionally identical across both themes: the brand color and
+ * semantic accent colors never change, only the surfaces and text
+ * around them do.
+ */
+:root {
+  --surface: 0 0% 100%; /* white */
+  --surface-dim: 210 20% 98%;
+  --surface-low: 210 20% 97%; /* cards */
+  --surface-high: 210 16% 93%;
+
+  --border: 210 15% 88%;
+
+  --foreground: 215 28% 12%; /* near-black, ~15.5:1 on white */
+  --foreground-muted: 215 12% 36%; /* ~7.3:1 on white */
+
+  --primary: 12 88% 58%; /* Git Orange #F05032 — same in both themes */
+  --primary-foreground: 0 0% 100%;
+
+  --accent-blue: 217 91% 48%; /* darkened from the dark-theme value so it stays ≥4.5:1 on white */
+  --accent-green: 142 71% 32%;
+  --accent-yellow: 38 92% 38%;
+  --accent-red: 0 72% 45%;
+
+  /* Code block surface + syntax token colors — a light, slightly cool
+     gray rather than pure white, so the terminal window still reads
+     as a distinct surface against the page (GitHub Docs uses the same
+     approach for its light-theme code blocks). */
+  --code-surface: 220 14% 96%;
+  --code-header: 220 13% 91%;
+  --code-border: 220 13% 85%;
+  --code-text: 220 20% 15%;
+  --code-muted: 220 9% 44%; /* comments, prompt sign — ~4.6:1 on --code-surface */
+  --code-string: 152 62% 30%; /* darkened for contrast on a light surface */
+  --code-flag: 205 82% 36%;
+}
+
+.dark {
+  --surface: 210 33% 7%; /* #0b141c */
+  --surface-dim: 210 33% 7%;
+  --surface-low: 213 24% 11%; /* #141c25 */
+  --surface-high: 210 20% 16%; /* #222b33 */
+
+  --border: 210 12% 20%;
+
+  --foreground: 213 30% 90%; /* #dae3ef */
+  --foreground-muted: 213 12% 65%;
+
+  --primary: 12 88% 58%; /* Git Orange #F05032 */
+  --primary-foreground: 0 0% 100%;
+
+  --accent-blue: 217 100% 74%;
+  --accent-green: 142 71% 45%;
+  --accent-yellow: 45 93% 58%;
+  --accent-red: 0 84% 65%;
+
+  /* Near-black terminal surface — the look CodeBlock always had before
+     this file distinguished code tokens from the page's own surface
+     tokens; unchanged here, just given its own named variables. */
+  --code-surface: 220 20% 9%;
+  --code-header: 220 16% 14%;
+  --code-border: 220 15% 22%;
+  --code-text: 210 20% 92%;
+  --code-muted: 215 12% 58%;
+  --code-string: 152 55% 55%;
+  --code-flag: 199 75% 62%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-surface text-foreground antialiased transition-colors duration-150;
+}
+
+/**
+ * The small uppercase "eyebrow" label used above sidebar groups, footer
+ * columns, TOC, search result groups, and the exercise "Challenge" tag.
+ * Previously the same four utility classes were retyped by hand in five
+ * different components — consolidated here so the one place to change
+ * letter-spacing or size is this rule, not five call sites.
+ */
+@layer components {
+  .label-eyebrow {
+    @apply text-xs font-semibold uppercase tracking-widest;
+  }
+}
+
+/* Respect motion preferences site-wide */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Visible keyboard focus ring, matched to brand primary */
+:focus-visible {
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 2px;
+}
