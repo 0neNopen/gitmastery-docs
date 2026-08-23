@@ -29,6 +29,10 @@ lerna-debug.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# Tooling Caches & Test Artifacts
+.eslintcache
+coverage/
+
 # IDE & Editor Configs
 .vscode/*
 !.vscode/extensions.json
