@@ -83,7 +83,7 @@ Buka website GitMastery dan ikuti urutan belajar yang terstruktur:
 
 ## ✨ Fitur Utama GitMastery
 
-- 📚 **29 Modul Dokumentasi & Praktik**:
+- 📚 **30 Modul Dokumentasi & Praktik**:
   - **11 Modul Git**: Dari instalasi, konfigurasi, status, commit, log, branch, merge, hingga remote.
   - **8 Modul GitHub**: Akun, SSH/PAT, repositori remote, push, pull, clone, dan Pull Request.
   - **1 Capstone Tutorial**: Praktik end-to-end membangun proyek nyata langkah demi langkah.
@@ -139,7 +139,7 @@ Bagi pengembang yang ingin menjalankan atau mengembangkan website ini di kompute
 ### 2. Kloning Repositori & Install Dependensi
 ```bash
 # Kloning repositori
-git clone https://github.com/username/gitmastery-components.git
+git clone https://github.com/0neNopen/nopen-github-git.git gitmastery-components
 
 # Masuk ke direktori proyek
 cd gitmastery-components
@@ -155,6 +155,8 @@ npm run dev
 Buka browser dan akses `http://localhost:3000`. Halaman akan otomatis memuat ulang (*hot-reload*) setiap kali Anda menyunting file.
 
 ### 4. Build untuk Produksi
+
+> **Catatan deployment:** sebelum build produksi, set variabel lingkungan `NEXT_PUBLIC_SITE_URL` ke domain asli situs (tanpa garis miring di akhir), contoh: `NEXT_PUBLIC_SITE_URL=https://gitmastery.example.com`. Nilai ini dipakai oleh `metadataBase`, sitemap, dan `robots.txt`.
 ```bash
 # Melakukan type checking & build statis
 npm run build
@@ -163,10 +165,19 @@ npm run build
 npm run start
 ```
 
-### 5. Type Checking
+### 5. Pemeriksaan Kualitas (Lint, Test, Type Check)
 ```bash
+# ESLint (aturan next/core-web-vitals, konfigurasi di .eslintrc.json)
+npm run lint
+
+# Unit test untuk fungsi-fungsi inti di src/lib (Vitest)
+npm test
+
+# Type checking TypeScript strict
 npx tsc --noEmit
 ```
+
+Kelimanya juga dijalankan otomatis oleh CI (`.github/workflows/ci.yml`) pada setiap push dan pull request.
 
 ---
 
@@ -216,6 +227,9 @@ gitmastery-components/
 │   ├── lib/                    # Helper SEO, pencarian, dan navigasi docs
 │   ├── styles/                 # Tailwind CSS & desain token (globals.css)
 │   └── types/                  # Deklarasi tipe TypeScript
+├── docs/                         # Panduan developer: arsitektur & cara menambah materi
+│   ├── ARCHITECTURE.md
+│   └── ADD_A_LESSON.md
 ├── package.json
 ├── tailwind.config.ts
 └── tsconfig.json
@@ -226,6 +240,11 @@ gitmastery-components/
 ## 🤝 Berkontribusi
 
 Kontribusi berupa perbaikan materi, penambahan tips, atau penyempurnaan kode selalu terbuka!
+
+- 📘 **Menambah modul materi baru?** Ikuti panduan langkah demi langkah di [docs/ADD_A_LESSON.md](docs/ADD_A_LESSON.md).
+- 🏗️ **Ingin memahami cara kerja situs?** Baca [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+
+Alur kontribusinya:
 1. Lakukan **Fork** pada repositori ini.
 2. Buat branch fitur baru (`git checkout -b fitur/materi-baru`).
 3. Lakukan commit perubahan Anda (`git commit -m 'feat: tambah penjelasan tips remote'`).
