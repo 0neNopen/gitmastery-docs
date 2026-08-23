@@ -139,7 +139,7 @@ Bagi pengembang yang ingin menjalankan atau mengembangkan website ini di kompute
 ### 2. Kloning Repositori & Install Dependensi
 ```bash
 # Kloning repositori
-git clone https://github.com/0neNopen/nopen-github-git.git gitmastery-components
+git clone https://github.com/0neNopen/gitmastery-docs.git gitmastery-components
 
 # Masuk ke direktori proyek
 cd gitmastery-components
