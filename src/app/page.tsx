@@ -31,7 +31,7 @@ export default function HomePage() {
         hasSidebar={false}
         ctaLabel="Mulai Belajar"
         ctaHref="/docs/git/introduction"
-        githubHref="https://github.com"
+        githubHref="https://github.com/0neNopen/gitmastery-docs"
       />
 
       <main id="main-content">
