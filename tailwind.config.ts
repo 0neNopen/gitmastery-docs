@@ -46,6 +46,7 @@ const config: Config = {
       },
       fontFamily: {
         sans: [
+          "var(--font-inter)",
           "Inter",
           "-apple-system",
           "BlinkMacSystemFont",
@@ -58,6 +59,7 @@ const config: Config = {
           "sans-serif",
         ],
         mono: [
+          "var(--font-jetbrains-mono)",
           "'JetBrains Mono'",
           "'Fira Code'",
           "ui-monospace",

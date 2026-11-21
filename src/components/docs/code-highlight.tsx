@@ -27,6 +27,21 @@ export function inferCodeLanguage(label?: string): CodeLanguage {
   return "text";
 }
 
+/**
+ * Prepares code for the clipboard. For `bash` snippets, strips any
+ * decorative leading `$ ` shell prompt from each line so pasted
+ * commands execute cleanly in Bash, Zsh, Git Bash, and PowerShell
+ * without `$: command not found` errors. Shell variables like `$HOME`
+ * are untouched because the pattern requires whitespace after `$`.
+ */
+export function getCopyableCode(code: string, language: CodeLanguage): string {
+  if (language !== "bash") return code;
+  return code
+    .split("\n")
+    .map((line) => line.replace(/^(\s*)\$\s+/, "$1"))
+    .join("\n");
+}
+
 const STRING_TOKEN = /^"(?:[^"\\]|\\.)*"$|^'(?:[^'\\]|\\.)*'$/;
 const URL_TOKEN = /^https?:\/\//;
 const FLAG_TOKEN = /^-{1,2}[a-zA-Z][\w-]*$/;
@@ -133,19 +148,23 @@ export function highlightCode(code: string, language: CodeLanguage): ReactNode {
   const lines = code.split("\n");
 
   if (language === "html") {
-    return lines.map((line, i) => <div key={i}>{highlightHtmlLine(line, i)}</div>);
+    return lines.map((line, i) => (
+      <div key={i}>{line ? highlightHtmlLine(line, i) : "\u00A0"}</div>
+    ));
   }
 
   if (language === "url") {
     return lines.map((line, i) => (
       <div key={i} className="break-all text-code-flag">
-        {line}
+        {line || "\u00A0"}
       </div>
     ));
   }
 
   if (language === "bash" || language === "output") {
-    return lines.map((line, i) => <div key={i}>{highlightBashLine(line, i)}</div>);
+    return lines.map((line, i) => (
+      <div key={i}>{line ? highlightBashLine(line, i) : "\u00A0"}</div>
+    ));
   }
 
   // "text" — unknown label, no token rules, but still one div per line

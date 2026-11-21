@@ -18,12 +18,9 @@ export interface RoadmapTimelineProps {
  */
 export function RoadmapTimeline({ steps }: RoadmapTimelineProps) {
   return (
-    <ol className="relative">
-      {/* Connecting line — spans the full height of the list, sits behind the numbered nodes */}
-      <div className="absolute left-5 top-5 h-[calc(100%-2.5rem)] w-px bg-border" aria-hidden />
-
+    <ol className="relative before:pointer-events-none before:absolute before:left-5 before:top-5 before:h-[calc(100%-2.5rem)] before:w-px before:bg-border">
       {steps.map((step, i) => (
-        <li key={step.id} className="mb-6 last:mb-0">
+        <li key={step.id} id={step.id} className="mb-6 scroll-mt-24 last:mb-0">
           <RoadmapStepCard step={step} index={i + 1} />
         </li>
       ))}

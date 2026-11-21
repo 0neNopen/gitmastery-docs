@@ -77,12 +77,20 @@ export const cheatSheetSections: CheatSheetSection[] = [
         description: "Buat branch baru (tapi tidak berpindah ke sana)",
       },
       {
+        command: "git switch <branch>",
+        description: "Pindah ke branch lain (sintaks modern Git 2.23+)",
+      },
+      {
+        command: "git switch -c <branch>",
+        description: "Buat branch baru dan langsung pindah ke sana (modern)",
+      },
+      {
         command: "git checkout <branch>",
-        description: "Pindah ke branch lain",
+        description: "Pindah ke branch lain (sintaks klasik)",
       },
       {
         command: "git checkout -b <branch>",
-        description: "Buat branch baru dan langsung pindah ke sana",
+        description: "Buat branch baru dan langsung pindah ke sana (klasik)",
       },
       {
         command: "git merge <branch>",

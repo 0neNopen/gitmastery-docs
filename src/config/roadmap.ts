@@ -62,7 +62,8 @@ export const roadmapSteps: RoadmapStep[] = [
   {
     id: "studi-kasus",
     title: "Studi Kasus",
-    description: "Terapkan semuanya dalam satu proyek nyata dari nol sampai Pull Request.",
+    description:
+      "Terapkan seluruh alur dari nol dalam satu proyek nyata: init, commit, hubungkan remote, hingga push ke GitHub.",
     href: "/tutorials/project-pertamaku",
   },
 ];

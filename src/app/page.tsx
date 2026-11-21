@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import { Navbar, Footer } from "@/components/layouts";
 import { HeroSection, CategoryGrid } from "@/components/home";
-import { homeNavLinks, homeFooterColumns } from "@/config/homepage";
+import { primaryNavLinks, footerColumns } from "@/config/navigation";
 import { siteConfig } from "@/config/site";
 import { buildPageMetadata } from "@/lib/seo/build-page-metadata";
 
@@ -27,11 +27,9 @@ export default function HomePage() {
   return (
     <>
       <Navbar
-        primaryLinks={homeNavLinks}
+        primaryLinks={primaryNavLinks}
         hasSidebar={false}
-        ctaLabel="Mulai Belajar"
-        ctaHref="/docs/git/introduction"
-        githubHref="https://github.com/0neNopen/gitmastery-docs"
+        githubHref={siteConfig.githubUrl}
       />
 
       <main id="main-content">
@@ -40,7 +38,7 @@ export default function HomePage() {
       </main>
 
       <Footer
-        columns={homeFooterColumns}
+        columns={footerColumns}
         tagline="Membangun standar baru dalam edukasi teknik. GitMastery membantu developer di seluruh Indonesia menguasai alur kerja Git yang profesional."
       />
     </>

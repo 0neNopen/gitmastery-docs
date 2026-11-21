@@ -1,21 +1,16 @@
+import { useId } from "react";
+
 import type { NavGroup } from "@/types/navigation";
 import { SidebarLink } from "./SidebarLink";
 
 /**
  * The label is a plain paragraph associated via `aria-labelledby`, not
- * a heading. "Basic Git", "Branching", etc. are navigation group
- * labels, not content sections — and `Sidebar` renders before the main
- * content's own `h1` in the DOM, so using a heading here (as this
- * component originally did, an `<h3>`) meant every documentation page
- * had a heading appear *before* its `h1`, a real hierarchy violation
- * found during an accessibility audit. `role="group"` +
- * `aria-labelledby` still tells assistive tech "this list of links is
- * called X" — a plain `<div>` alone wouldn't communicate that
- * relationship, so the ARIA here is filling a real gap, not decorating
- * semantic HTML that was already sufficient on its own.
+ * a heading — so no heading appears before the page's `h1`. `useId()`
+ * guarantees unique DOM IDs even when both the desktop rail and mobile
+ * drawer mount the same group names simultaneously.
  */
 export function SidebarGroup({ title, items }: NavGroup) {
-  const labelId = `sidebar-group-${title.toLowerCase().replace(/\s+/g, "-")}`;
+  const labelId = useId();
 
   return (
     <div className="mb-6">

@@ -1,5 +1,3 @@
-"use client";
-
 import { learningCategories } from "@/config/homepage";
 import { CategoryCard } from "./CategoryCard";
 

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState, useCallback } from "react";
+import React, { useCallback, useRef } from "react";
 import { cn } from "@/lib/utils/cn";
 
 export interface SpotlightCardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -10,45 +10,38 @@ export interface SpotlightCardProps extends React.HTMLAttributes<HTMLDivElement>
 }
 
 /**
- * SpotlightCard component inspired by React Bits.
- *
- * Tracks the cursor's coordinates over the card surface to generate a subtle,
- * dynamic radial spotlight illumination on the card's border and background.
- * Seamlessly adapts to light and dark themes using GitMastery CSS variables.
+ * SpotlightCard tracks cursor coordinates directly via CSS custom properties
+ * (`--spotlight-x` / `--spotlight-y`) so hover motion triggers zero React
+ * re-renders per frame while preserving the smooth radial glow effect.
  */
 export function SpotlightCard({
   children,
   spotlightColor = "rgba(240, 80, 50, 0.12)",
   className,
+  style,
   ...props
 }: SpotlightCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
-  const [position, setPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    setPosition({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    });
-  }, []);
-
-  const handleMouseEnter = useCallback(() => {
-    setIsHovered(true);
-  }, []);
-
-  const handleMouseLeave = useCallback(() => {
-    setIsHovered(false);
+    const node = cardRef.current;
+    if (!node) return;
+    const rect = node.getBoundingClientRect();
+    node.style.setProperty("--spotlight-x", `${e.clientX - rect.left}px`);
+    node.style.setProperty("--spotlight-y", `${e.clientY - rect.top}px`);
   }, []);
 
   return (
     <div
       ref={cardRef}
       onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      style={
+        {
+          "--spotlight-x": "50%",
+          "--spotlight-y": "50%",
+          ...style,
+        } as React.CSSProperties
+      }
       className={cn(
         "group relative overflow-hidden rounded-2xl border border-border bg-surface-low p-6 transition-all duration-300",
         "hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 dark:hover:shadow-primary/10",
@@ -58,16 +51,15 @@ export function SpotlightCard({
     >
       {/* Dynamic Cursor Spotlight Layer */}
       <div
-        className="pointer-events-none absolute -inset-px rounded-2xl transition-opacity duration-300"
+        className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         style={{
-          opacity: isHovered ? 1 : 0,
-          background: `radial-gradient(450px circle at ${position.x}px ${position.y}px, ${spotlightColor}, transparent 70%)`,
+          background: `radial-gradient(450px circle at var(--spotlight-x) var(--spotlight-y), ${spotlightColor}, transparent 70%)`,
         }}
         aria-hidden="true"
       />
 
       {/* Card Content Layer */}
-      <div className="relative z-10">{children}</div>
+      <div className="relative z-10 h-full">{children}</div>
     </div>
   );
 }

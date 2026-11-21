@@ -1,14 +1,26 @@
 "use client";
 
-import { SearchBar } from "./SearchBar";
-import { searchDocs } from "@/lib/search/search-docs";
+import { useCallback } from "react";
 
-/**
- * Connects `SearchBar` to the site's real search index. Kept as its
- * own tiny client component so `Navbar` (and anything else that wants
- * search) can just render `<DocsSearch />` — no `onSearch` prop to
- * thread through `DocsLayout` → `LessonTemplate` → every page.
- */
-export function DocsSearch() {
-  return <SearchBar onQuery={searchDocs} placeholder="Cari dokumentasi..." />;
+import { SearchBar } from "./SearchBar";
+import { searchDocuments } from "@/lib/search/search-documents";
+import type { SearchDocument } from "@/types/search";
+
+export interface DocsSearchProps {
+  /**
+   * Plain serializable search corpus built on the server (in `Navbar`).
+   * Passing metadata as props keeps all 20+ JSX lesson/tutorial files
+   * completely out of the client JS bundle while preserving the single
+   * source of truth in `content/search`.
+   */
+  documents: SearchDocument[];
+}
+
+export function DocsSearch({ documents }: DocsSearchProps) {
+  const handleQuery = useCallback(
+    (query: string) => searchDocuments(query, documents),
+    [documents]
+  );
+
+  return <SearchBar onQuery={handleQuery} placeholder="Cari dokumentasi..." />;
 }

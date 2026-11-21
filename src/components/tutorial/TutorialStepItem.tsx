@@ -19,7 +19,7 @@ export function TutorialStepItem({ step, index }: TutorialStepItemProps) {
 
   return (
     <section aria-labelledby={headingId} className="border-t border-foreground/10 pt-8 first:border-t-0 first:pt-0">
-      <h2 id={headingId} className="flex items-center gap-3 text-2xl font-bold text-foreground">
+      <h2 id={headingId} className="scroll-mt-24 flex items-center gap-3 text-2xl font-bold text-foreground">
         <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 font-mono text-sm font-semibold text-primary">
           {index}
         </span>

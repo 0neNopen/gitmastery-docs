@@ -16,7 +16,7 @@ export default function AboutPage() {
       <Breadcrumb
         items={[
           { label: "Dokumentasi", href: "/" },
-          { label: "About", href: "/about" },
+          { label: "Tentang", href: "/about" },
         ]}
       />
 

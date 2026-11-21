@@ -30,7 +30,7 @@ export function PageNavigation({ previous, next }: PageNavigationProps) {
         >
           <span className="flex items-center gap-1.5 text-xs text-foreground-muted">
             <ArrowLeft className="h-3 w-3" aria-hidden />
-            Previous
+            Sebelumnya
           </span>
           <span className="mt-1 text-sm font-medium text-foreground transition-colors group-hover:text-primary">
             {previous.label}
@@ -46,7 +46,7 @@ export function PageNavigation({ previous, next }: PageNavigationProps) {
           className="group flex flex-col items-end rounded-md border border-foreground/10 p-4 text-right transition-colors hover:border-foreground/20 hover:bg-foreground/5 sm:col-start-2"
         >
           <span className="flex items-center gap-1.5 text-xs text-foreground-muted">
-            Next
+            Selanjutnya
             <ArrowRight className="h-3 w-3" aria-hidden />
           </span>
           <span className="mt-1 text-sm font-medium text-foreground transition-colors group-hover:text-primary">

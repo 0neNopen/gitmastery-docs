@@ -1,14 +1,24 @@
 import type { Metadata } from "next";
+
 import { DocsLayout } from "@/components/layouts/DocsLayout";
 import { Breadcrumb } from "@/components/docs/Breadcrumb";
+import { CopyCommandButton } from "@/components/docs/CopyCommandButton";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/Table";
 import { primaryNavLinks, footerColumns } from "@/config/navigation";
 import { buildPageMetadata } from "@/lib/seo/build-page-metadata";
 import { cheatSheetSections } from "@/content/reference/cheat-sheet";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Git Cheat Sheet - Referensi Command Git",
+  title: "Git Cheat Sheet - Referensi Perintah Git",
   description:
-    "Daftar lengkap command Git yang paling sering dipakai: setup, operasi harian, branch, remote, dan undo. Cocok untuk referensi cepat.",
+    "Daftar lengkap perintah Git yang paling sering dipakai: setup, operasi harian, branch, remote, dan undo. Cocok untuk referensi cepat.",
   path: "/reference/cheat-sheet",
 });
 
@@ -24,37 +34,51 @@ export default function CheatSheetPage() {
       <Breadcrumb
         items={[
           { label: "Dokumentasi", href: "/" },
-          { label: "Reference", href: "/reference/cheat-sheet" },
+          { label: "Referensi", href: "/reference" },
           { label: "Cheat Sheet", href: "/reference/cheat-sheet" },
         ]}
       />
 
       <h1>Git Cheat Sheet</h1>
       <p className="lead text-lg text-foreground-muted">
-        Daftar lengkap command Git yang paling sering dipakai. Bookmark halaman ini untuk referensi cepat.
+        Daftar lengkap perintah Git yang paling sering dipakai. Klik tombol salin di setiap baris
+        atau bookmark halaman ini untuk referensi cepat.
       </p>
 
       {cheatSheetSections.map((section) => (
-        <section key={section.slug} id={section.slug} aria-labelledby={`heading-${section.slug}`} className="mt-12 scroll-mt-20">
+        <section
+          key={section.slug}
+          id={section.slug}
+          aria-labelledby={`heading-${section.slug}`}
+          className="mt-12 scroll-mt-24"
+        >
           <h2 id={`heading-${section.slug}`}>{section.title}</h2>
           <p className="text-foreground-muted">{section.intro}</p>
-          <div className="mt-4 overflow-x-auto">
-            <table className="w-full border-collapse">
-              <thead>
-                <tr className="border-b border-border">
-                  <th className="px-4 py-2 text-left font-semibold text-foreground">Command</th>
-                  <th className="px-4 py-2 text-left font-semibold text-foreground">Description</th>
-                </tr>
-              </thead>
-              <tbody>
-                {section.rows.map((row, index) => (
-                  <tr key={index} className="border-b border-border">
-                    <td className="px-4 py-3 font-mono text-sm text-primary font-medium">{row.command}</td>
-                    <td className="px-4 py-3 text-foreground-muted">{row.description}</td>
-                  </tr>
+          <div className="mt-4">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Perintah</TableHead>
+                  <TableHead>Fungsi</TableHead>
+                  <TableHead className="w-24 text-right">
+                    <span className="sr-only">Salin perintah</span>
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {section.rows.map((row) => (
+                  <TableRow key={row.command}>
+                    <TableCell className="whitespace-nowrap font-mono text-sm font-medium text-primary">
+                      {row.command}
+                    </TableCell>
+                    <TableCell className="text-foreground-muted">{row.description}</TableCell>
+                    <TableCell className="text-right">
+                      <CopyCommandButton command={row.command} />
+                    </TableCell>
+                  </TableRow>
                 ))}
-              </tbody>
-            </table>
+              </TableBody>
+            </Table>
           </div>
         </section>
       ))}

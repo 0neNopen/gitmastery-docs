@@ -22,7 +22,7 @@ export function SidebarCollapseToggle() {
       onClick={toggleCollapsed}
       aria-label={isCollapsed ? "Perluas sidebar" : "Ciutkan sidebar"}
       aria-pressed={isCollapsed}
-      title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+      title={isCollapsed ? "Perluas sidebar" : "Ciutkan sidebar"}
       className="hidden h-9 w-9 shrink-0 items-center justify-center rounded-md text-foreground-muted transition-colors hover:bg-foreground/10 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary lg:inline-flex"
     >
       <Icon className="h-4 w-4" aria-hidden />

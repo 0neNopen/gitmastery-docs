@@ -8,12 +8,8 @@ const FOCUSABLE_SELECTOR =
 /**
  * Traps Tab/Shift+Tab cycling within `containerRef` while `active` is
  * true, and restores focus to whatever was focused before the overlay
- * opened once it closes. Without this, a keyboard user could Tab past
- * an open dialog or drawer straight into background page content that
- * a mouse user would perceive as hidden behind the backdrop, but which
- * was never actually removed from the tab order — found as a real gap
- * in both `SearchBar` and the mobile sidebar drawer during an
- * accessibility audit.
+ * opened once it closes (as long as that element is still in the DOM).
+ * Also handles initial focus landing on the container itself (`tabIndex={-1}`).
  */
 export function useFocusTrap(containerRef: RefObject<HTMLElement | null>, active: boolean) {
   useEffect(() => {
@@ -38,10 +34,15 @@ export function useFocusTrap(containerRef: RefObject<HTMLElement | null>, active
       const last = focusable[focusable.length - 1];
       if (!first || !last) return;
 
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
+      const current = document.activeElement;
+      const isOutside = !current || !container!.contains(current);
+
+      if (event.shiftKey) {
+        if (current === first || current === container || isOutside) {
+          event.preventDefault();
+          last.focus();
+        }
+      } else if (current === last || isOutside) {
         event.preventDefault();
         first.focus();
       }
@@ -51,7 +52,9 @@ export function useFocusTrap(containerRef: RefObject<HTMLElement | null>, active
 
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
-      previouslyFocused?.focus();
+      if (previouslyFocused?.isConnected) {
+        previouslyFocused.focus();
+      }
     };
   }, [active, containerRef]);
 }

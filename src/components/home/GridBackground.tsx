@@ -1,21 +1,8 @@
-"use client";
-
-import { useEffect, useState } from "react";
-
 /**
- * GridBackground component inspired by React Bits.
- *
- * Renders an ambient background grid with a smooth radial fade mask and
- * subtle luminous glow accents using the project's exact theme tokens
- * (--primary, --border, --surface) for seamless Light and Dark mode harmony.
+ * Ambient geometric grid & soft luminous glow behind the homepage hero.
+ * Pure Server Component — zero client JS or hydration overhead.
  */
 export function GridBackground() {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   return (
     <div
       aria-hidden="true"

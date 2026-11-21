@@ -1,6 +1,7 @@
 export { Breadcrumb } from "./Breadcrumb";
 export { Callout } from "./Callout";
 export { CodeBlock } from "./CodeBlock";
+export { CopyCommandButton } from "./CopyCommandButton";
 export { SearchBar } from "./SearchBar";
 export { DocsSearch } from "./DocsSearch";
 export { TableOfContents } from "./TableOfContents";

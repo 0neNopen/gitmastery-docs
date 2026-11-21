@@ -15,8 +15,8 @@ export function VerticalFlowDiagram({ steps }: VerticalFlowDiagramProps) {
   return (
     <div className="not-prose flex flex-col items-center gap-2.5 text-sm my-2">
       {steps.map((step, index) => (
-        <Fragment key={step}>
-          <div className="min-w-[12rem] rounded-xl border border-border/80 bg-surface dark:bg-surface-low px-5 py-3 text-center font-semibold text-foreground shadow-xs transition-all hover:border-primary/30">
+        <Fragment key={`${step}-${index}`}>
+          <div className="min-w-[12rem] rounded-xl border border-border/80 bg-surface dark:bg-surface-low px-5 py-3 text-center font-semibold text-foreground shadow-sm transition-all hover:border-primary/30">
             {step}
           </div>
           {index < steps.length - 1 && (

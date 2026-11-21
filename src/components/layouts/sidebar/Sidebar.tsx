@@ -8,12 +8,14 @@ import { cn } from "@/lib/utils/cn";
 import { useLockBodyScroll } from "@/hooks/useLockBodyScroll";
 import { useEscapeToClose } from "@/hooks/useEscapeToClose";
 import { useFocusTrap } from "@/hooks/useFocusTrap";
-import type { NavGroup } from "@/types/navigation";
+import type { NavGroup, NavLink } from "@/types/navigation";
 import { SidebarNav } from "./SidebarNav";
 import { useSidebar } from "./SidebarContext";
 
 export interface SidebarProps {
   groups: NavGroup[];
+  /** Primary top-level links surfaced at the top of the mobile drawer below `md:` so mobile docs pages only need one menu trigger. */
+  primaryLinks?: NavLink[];
 }
 
 /**
@@ -26,7 +28,7 @@ export interface SidebarProps {
  * so the Navbar's two trigger buttons can control this without a direct
  * reference to it.
  */
-export function Sidebar({ groups }: SidebarProps) {
+export function Sidebar({ groups, primaryLinks = [] }: SidebarProps) {
   const { isOpen, close, isCollapsed } = useSidebar();
   const drawerRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -97,17 +99,25 @@ export function Sidebar({ groups }: SidebarProps) {
             className="absolute inset-y-0 left-0 w-72 max-w-[80vw] overflow-y-auto bg-surface-low py-6 shadow-2xl"
           >
             <div className="mb-4 flex items-center justify-between px-4">
-              <span className="text-sm font-semibold text-foreground">Dokumentasi</span>
+              <span className="text-sm font-semibold text-foreground">Navigasi</span>
               <button
                 ref={closeButtonRef}
                 type="button"
                 onClick={close}
-                aria-label="Tutup menu dokumentasi"
+                aria-label="Tutup navigasi dokumentasi"
                 className="rounded p-1.5 text-foreground-muted hover:bg-foreground/10 hover:text-foreground"
               >
-                <X className="h-4 w-4" />
+                <X className="h-4 w-4" aria-hidden />
               </button>
             </div>
+            {primaryLinks.length > 0 && (
+              <div className="mb-4 border-b border-foreground/10 pb-2 md:hidden">
+                <SidebarNav
+                  ariaLabel="Menu utama mobile"
+                  groups={[{ title: "Menu Utama", items: primaryLinks }]}
+                />
+              </div>
+            )}
             <SidebarNav groups={groups} />
           </div>
         </div>

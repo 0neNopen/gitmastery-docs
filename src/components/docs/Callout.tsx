@@ -53,8 +53,8 @@ export function Callout({ variant = "info", title, children, className }: Callou
 
   return (
     <div role="note" className={cn(calloutVariants({ variant: safeVariant }), className)}>
-      <div className={cn("flex h-9 w-9 shrink-0 items-center justify-center rounded-xl shadow-xs mt-0.5", badgeClass)}>
-        <Icon className="h-4.5 w-4.5" aria-hidden />
+      <div className={cn("mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl shadow-sm", badgeClass)}>
+        <Icon className="h-4 w-4" aria-hidden />
       </div>
       <div className="min-w-0 flex-1">
         {title && (
@@ -62,7 +62,7 @@ export function Callout({ variant = "info", title, children, className }: Callou
             {title}
           </p>
         )}
-        <div className="text-foreground/90 font-normal leading-relaxed [&_p]:my-0 [&_code]:rounded-md [&_code]:bg-surface dark:[&_code]:bg-surface-high [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-xs [&_code]:font-semibold [&_code]:text-foreground [&_code]:border [&_code]:border-border/70 [&_code]:shadow-2xs [&_strong]:font-semibold [&_strong]:text-foreground [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2 [&_a]:font-medium hover:[&_a]:text-primary/80">
+        <div className="text-foreground/90 font-normal leading-relaxed [&_p]:my-0 [&_code]:rounded-md [&_code]:bg-surface dark:[&_code]:bg-surface-high [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-xs [&_code]:font-semibold [&_code]:text-foreground [&_code]:border [&_code]:border-border/70 [&_code]:shadow-sm [&_strong]:font-semibold [&_strong]:text-foreground [&_a]:text-primary [&_a]:underline [&_a]:underline-offset-2 [&_a]:font-medium hover:[&_a]:text-primary/80">
           {children}
         </div>
       </div>

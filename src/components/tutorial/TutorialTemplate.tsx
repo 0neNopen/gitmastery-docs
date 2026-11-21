@@ -32,18 +32,21 @@ export interface TutorialTemplateProps {
  * reordered, or renamed.
  */
 export function TutorialTemplate({ tutorial, href, previous, next }: TutorialTemplateProps) {
-  const headings: Heading[] = tutorial.steps.map((step, index) => ({
-    id: `step-${index + 1}`,
-    text: step.title,
-    level: 2,
-  }));
+  const headings: Heading[] = [
+    ...tutorial.steps.map((step, index) => ({
+      id: `step-${index + 1}`,
+      text: step.title,
+      level: 2 as const,
+    })),
+    { id: "selesai", text: "Selesai!", level: 2 as const },
+  ];
 
   return (
     <DocsLayout primaryNavLinks={primaryNavLinks} footerColumns={footerColumns} headings={headings}>
       <Breadcrumb
         items={[
           { label: "Dokumentasi", href: "/" },
-          { label: "Tutorial", href },
+          { label: "Tutorial", href: "/tutorials" },
           { label: tutorial.title, href },
         ]}
       />
@@ -64,7 +67,7 @@ export function TutorialTemplate({ tutorial, href, previous, next }: TutorialTem
       </div>
 
       <div>
-        <h2>Selesai!</h2>
+        <h2 id="selesai">Selesai!</h2>
         {tutorial.summary}
       </div>
 

@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
@@ -39,7 +37,10 @@ export function CategoryCard({ title, description, href, icon: Icon, accent }: L
       spotlightColor={styling.spotlightColor}
       className="flex h-full w-full flex-col justify-between"
     >
-      <Link href={href} className="flex h-full flex-col justify-between focus:outline-none">
+      <Link
+        href={href}
+        className="flex h-full flex-col justify-between rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 focus-visible:ring-offset-surface-low"
+      >
         <div>
           <div
             className={cn(

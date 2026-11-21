@@ -204,10 +204,17 @@ export const projectPertamaku: TutorialContent = {
       description: <p>Kirim dan unggah commit pertama kamu dari komputer lokal ke server GitHub.</p>,
       command: { label: "bash", code: `$ git push -u origin main` },
       commandExplanation: (
-        <p>
-          Opsi <code>-u origin main</code> menetapkan cabang pelacakan default. Untuk proses push berikutnya,
-          kamu cukup mengetik <code>git push</code>.
-        </p>
+        <>
+          <p>
+            Opsi <code>-u origin main</code> menetapkan cabang pelacakan default. Untuk proses push berikutnya,
+            kamu cukup mengetik <code>git push</code>.
+          </p>
+          <p className="mt-2">
+            <strong>Catatan:</strong> Jika Git di komputermu masih memakai nama branch bawaan{" "}
+            <code>master</code> (muncul error <code>src refspec main does not match any</code>), jalankan{" "}
+            <code>git branch -M main</code> terlebih dahulu sebelum <code>git push -u origin main</code>.
+          </p>
+        </>
       ),
       expectedOutput: {
         label: "output",

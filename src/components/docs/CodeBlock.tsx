@@ -4,7 +4,7 @@ import { Check, Copy } from "lucide-react";
 
 import { cn } from "@/lib/utils/cn";
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
-import { highlightCode, inferCodeLanguage } from "./code-highlight";
+import { getCopyableCode, highlightCode, inferCodeLanguage } from "./code-highlight";
 
 export interface CodeBlockProps {
   code: string;
@@ -26,14 +26,15 @@ export interface CodeBlockProps {
  * palette that still switches between light and dark themes, the same
  * way every other themed token in the project does.
  *
- * Highlighting is purely presentational: the Copy button always copies
- * the original `code` string passed in, never the highlighted JSX, so
- * what a user pastes is byte-for-byte identical to what was written —
- * never reformatted, reflowed, or altered.
+ * Highlighting is purely presentational: the Copy button copies plain
+ * text via `getCopyableCode()` (stripping only decorative leading `$ `
+ * prompts in bash blocks so pasted commands run cleanly), never
+ * anything derived from the highlighted JSX spans.
  */
 export function CodeBlock({ code, label, className }: CodeBlockProps) {
   const { copied, copy } = useCopyToClipboard();
   const language = inferCodeLanguage(label);
+  const copyableCode = getCopyableCode(code, language);
 
   return (
     <div className={cn("not-prose overflow-hidden rounded-md border border-code-border bg-code-surface", className)}>
@@ -47,11 +48,11 @@ export function CodeBlock({ code, label, className }: CodeBlockProps) {
 
         <button
           type="button"
-          onClick={() => copy(code)}
+          onClick={() => copy(copyableCode)}
           className="flex shrink-0 items-center gap-1.5 rounded px-2 py-1 text-xs text-code-muted transition-colors hover:bg-code-border/50 hover:text-code-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           aria-label={copied ? "Disalin ke clipboard" : "Salin ke clipboard"}
         >
-          {copied ? <Check className="h-3.5 w-3.5 text-accent-green" /> : <Copy className="h-3.5 w-3.5" />}
+          {copied ? <Check className="h-3.5 w-3.5 text-accent-green" aria-hidden /> : <Copy className="h-3.5 w-3.5" aria-hidden />}
           {copied ? "Disalin" : "Salin"}
         </button>
       </div>

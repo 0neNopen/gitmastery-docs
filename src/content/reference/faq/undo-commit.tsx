@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import type { LessonContent } from "@/types/lesson";
 
 export const undoCommit: LessonContent = {
@@ -56,9 +58,11 @@ git revert HEAD --no-commit`,
   tips: (
     <p>
       Aturan sederhana: jika commit sudah berada di remote GitHub, selalu gunakan{" "}
-      <code>git revert</code>. Jika commit masih berada di lokal, kamu bebas
-      memilih antara <code>reset --soft</code> (menyimpan perubahan) atau{" "}
-      <code>reset --hard</code> (membuang perubahan).
+      <code>git revert</code>. Jika commit masih berada di lokal, kamu bebas memilih antara{" "}
+      <code>reset --soft</code> (menyimpan perubahan) atau <code>reset --hard</code> (membuang
+      perubahan). Untuk panduan langkah demi langkah saat terlanjur salah commit beserta pengecekan{" "}
+      <code>git log origin/main..main</code>, lihat juga studi kasus{" "}
+      <Link href="/troubleshooting/salah-commit">Salah Commit, Ingin Membatalkan</Link>.
     </p>
   ),
   commonMistakes: (

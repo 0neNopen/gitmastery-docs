@@ -10,6 +10,8 @@ import {
   type ReactNode,
 } from "react";
 
+import { safeGetStorageItem, safeSetStorageItem } from "@/lib/utils/storage";
+
 export type Theme = "light" | "dark" | "system";
 type ResolvedTheme = "light" | "dark";
 
@@ -45,7 +47,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   // One-time: adopt whatever preference was previously saved.
   useEffect(() => {
-    const stored = window.localStorage.getItem(STORAGE_KEY);
+    const stored = safeGetStorageItem(STORAGE_KEY);
     if (stored === "light" || stored === "dark" || stored === "system") {
       setThemeState(stored);
     }
@@ -72,7 +74,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   const setTheme = useCallback((next: Theme) => {
     setThemeState(next);
-    window.localStorage.setItem(STORAGE_KEY, next);
+    safeSetStorageItem(STORAGE_KEY, next);
   }, []);
 
   const value = useMemo(

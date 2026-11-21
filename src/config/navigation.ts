@@ -1,10 +1,14 @@
 import type { NavGroup, NavLink } from "@/types/navigation";
 
+/**
+ * Single primary navigation bar shared consistently across the homepage
+ * and every documentation/reference page.
+ */
 export const primaryNavLinks: NavLink[] = [
-  { label: "Curriculum", href: "/curriculum" },
+  { label: "Dokumentasi", href: "/docs/git/introduction" },
+  { label: "Roadmap", href: "/curriculum" },
   { label: "Tutorial", href: "/tutorials/project-pertamaku" },
-  { label: "Workflows", href: "/docs/github/pull-request" },
-  { label: "Perintah Git", href: "/docs/git/commit" },
+  { label: "Referensi", href: "/reference/cheat-sheet" },
 ];
 
 export const footerColumns: NavGroup[] = [
@@ -27,8 +31,9 @@ export const footerColumns: NavGroup[] = [
   {
     title: "Referensi",
     items: [
+      { label: "Roadmap Belajar", href: "/curriculum" },
       { label: "Cheat Sheet", href: "/reference/cheat-sheet" },
-      { label: "Glossary", href: "/reference/glossary" },
+      { label: "Glosarium", href: "/reference/glossary" },
       { label: "FAQ", href: "/reference/faq/git-vs-github" },
     ],
   },
@@ -37,8 +42,8 @@ export const footerColumns: NavGroup[] = [
     items: [
       { label: "Troubleshooting", href: "/troubleshooting/merge-conflict" },
       { label: "Tentang", href: "/about" },
-      { label: "Privacy", href: "/privacy" },
-      { label: "Terms", href: "/terms" },
+      { label: "Kebijakan Privasi", href: "/privacy" },
+      { label: "Syarat & Ketentuan", href: "/terms" },
     ],
   },
 ];

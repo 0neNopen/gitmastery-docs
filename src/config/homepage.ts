@@ -1,7 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import { Terminal, CloudCog, History, Settings2, LockKeyhole, BookOpen } from "lucide-react";
-
-import type { NavGroup, NavLink } from "@/types/navigation";
+import { Terminal, CloudCog, History, RefreshCw, GitMerge, BookOpen } from "lucide-react";
 
 export interface LearningCategory {
   title: string;
@@ -16,7 +14,7 @@ export const learningCategories: LearningCategory[] = [
   {
     title: "Dasar-Dasar Git",
     description:
-      "Pahami konsep staging, commit, dan branching dari nol hingga mahir di lingkungan lokal.",
+      "Pahami konsep version control, staging, commit, dan branching dari nol hingga mahir di lingkungan lokal.",
     href: "/docs/git/introduction",
     icon: Terminal,
     accent: "primary",
@@ -24,8 +22,8 @@ export const learningCategories: LearningCategory[] = [
   {
     title: "Kolaborasi GitHub",
     description:
-      "Pelajari alur kerja Pull Request, manajemen issue, dan kolaborasi tim dalam skala besar.",
-    href: "/docs/github/pull-request",
+      "Kenali GitHub mulai dari membuat akun dan repositori hingga alur Pull Request serta kolaborasi tim.",
+    href: "/docs/github/introduction",
     icon: CloudCog,
     accent: "tertiary",
   },
@@ -41,8 +39,8 @@ export const learningCategories: LearningCategory[] = [
     title: "Sinkronisasi Remote",
     description:
       "Hubungkan repositori lokal ke GitHub, lalu push dan pull perubahan antar mesin dengan aman.",
-    href: "/docs/github/push",
-    icon: Settings2,
+    href: "/docs/github/remote",
+    icon: RefreshCw,
     accent: "tertiary",
   },
   {
@@ -50,44 +48,15 @@ export const learningCategories: LearningCategory[] = [
     description:
       "Strategi merge dan cara menyelesaikan konflik saat dua baris pekerjaan bertemu.",
     href: "/docs/git/merge",
-    icon: LockKeyhole,
+    icon: GitMerge,
     accent: "primary",
   },
   {
     title: "Tutorial Proyek",
-    description: "Praktik langsung dari nol: bikin repo, commit, push, sampai buka Pull Request pertamamu.",
+    description:
+      "Praktik langsung dari nol: buat proyek, git init, commit, hubungkan ke GitHub, hingga git push pertamamu.",
     href: "/tutorials/project-pertamaku",
     icon: BookOpen,
     accent: "tertiary",
-  },
-];
-
-export const homeNavLinks: NavLink[] = [
-  { label: "Dokumentasi", href: "/docs/git/introduction" },
-  { label: "Panduan", href: "/curriculum" },
-  { label: "Tutorial", href: "/tutorials/project-pertamaku" },
-];
-
-/**
- * Every href here resolves to a real page. Links to pages that were
- * never built (`/reference/*`, `/about`, `/privacy`, `/terms`,
- * `/github/github-actions`) were removed rather than left as 404s.
- */
-export const homeFooterColumns: NavGroup[] = [
-  {
-    title: "Materi",
-    items: [
-      { label: "Dasar Git", href: "/docs/git/introduction" },
-      { label: "Alur Kerja Tim", href: "/docs/github/pull-request" },
-      { label: "Kurikulum", href: "/curriculum" },
-    ],
-  },
-  {
-    title: "Praktik",
-    items: [
-      { label: "Tutorial Proyek", href: "/tutorials/project-pertamaku" },
-      { label: "Commit Pertama", href: "/docs/git/commit" },
-      { label: "Clone Repositori", href: "/docs/github/clone" },
-    ],
   },
 ];

@@ -23,7 +23,10 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
   if (headings.length === 0) return null;
 
   return (
-    <nav aria-label="Daftar isi" className="sticky top-24 hidden w-56 shrink-0 xl:block">
+    <nav
+      aria-label="Daftar isi"
+      className="sticky top-24 hidden max-h-[calc(100vh-7rem)] w-56 shrink-0 self-start overflow-y-auto xl:block"
+    >
       <p className="mb-3 label-eyebrow text-foreground-muted">
         Di Halaman Ini
       </p>

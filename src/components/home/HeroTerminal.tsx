@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 import { Check, Copy, Terminal as TerminalIcon, GitBranch, GitCommit, Sparkles } from "lucide-react";
+
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import { cn } from "@/lib/utils/cn";
 
@@ -23,7 +24,7 @@ const TERMINAL_SNIPPETS: TerminalSnippet[] = [
     tabLabel: "Alur Dasar",
     icon: TerminalIcon,
     branch: "main",
-    badgeText: "3 files staged",
+    badgeText: "3 file di-commit",
     commands: [
       {
         command: "git init",
@@ -46,10 +47,10 @@ const TERMINAL_SNIPPETS: TerminalSnippet[] = [
     tabLabel: "Branching",
     icon: GitBranch,
     branch: "feat/landing-page",
-    badgeText: "switched branch",
+    badgeText: "berpindah branch",
     commands: [
       {
-        command: "git checkout -b feat/landing-page",
+        command: "git switch -c feat/landing-page",
         output: ["Switched to a new branch 'feat/landing-page'"],
       },
       {
@@ -67,7 +68,7 @@ const TERMINAL_SNIPPETS: TerminalSnippet[] = [
     tabLabel: "Push Remote",
     icon: GitCommit,
     branch: "main",
-    badgeText: "up to date",
+    badgeText: "tersinkron ke remote",
     commands: [
       {
         command: "git remote add origin https://github.com/kamu/proyek-hebat.git",
@@ -87,55 +88,66 @@ const TERMINAL_SNIPPETS: TerminalSnippet[] = [
 ];
 
 /**
- * HeroTerminal component inspired by developer tool showcases in React Bits.
- *
- * Demonstrates real-world Git workflows with syntax highlighting, interactive tab
- * switching, live Git branch status, and instant command copy functionality.
- * Fully adapts to the active Light/Dark theme using the project's code-* color palette.
+ * Interactive workflow preview terminal shown in the homepage hero.
+ * Lets visitors inspect three common Git workflows via accessible tabs
+ * and copy the clean commands in one click.
  */
 export function HeroTerminal() {
   const [activeTabId, setActiveTabId] = useState<string>("init");
-  const { copied, copy } = useCopyToClipboard();
+  const { copied, copy, reset } = useCopyToClipboard();
+  const tabBaseId = useId();
 
   const activeSnippet: TerminalSnippet =
     TERMINAL_SNIPPETS.find((s) => s.id === activeTabId) ?? TERMINAL_SNIPPETS[0]!;
 
-  // Concatenate all commands for quick copy
   const fullRawCommands = activeSnippet.commands.map((c) => c.command).join("\n");
 
+  function selectTab(id: string) {
+    setActiveTabId(id);
+    reset();
+  }
+
   return (
-    <div className="relative mx-auto mt-12 w-full max-w-3xl text-left">
+    <div className="group relative mx-auto mt-12 w-full max-w-3xl text-left">
       {/* Outer ambient aura glow */}
       <div
         className="pointer-events-none absolute -inset-1.5 rounded-2xl bg-gradient-to-r from-primary/30 via-accent-blue/20 to-primary/30 opacity-70 blur-xl transition-all duration-500 group-hover:opacity-100 dark:opacity-40"
         aria-hidden="true"
       />
 
-      <div className="relative overflow-hidden rounded-xl border border-code-border bg-code-surface shadow-2xl shadow-black/10 dark:shadow-black/60 backdrop-blur-sm">
+      <div className="relative overflow-hidden rounded-xl border border-code-border bg-code-surface shadow-2xl shadow-black/10 backdrop-blur-sm dark:shadow-black/60">
         {/* Terminal Header Bar */}
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-code-border bg-code-header px-4 py-2.5">
-          {/* Traffic light dots + Interactive Tabs */}
+          {/* Traffic light dots + Interactive Tabs (Desktop) */}
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1.5" aria-hidden="true">
-              <span className="h-3 w-3 rounded-full bg-accent-red/80 hover:opacity-100 transition-opacity" />
-              <span className="h-3 w-3 rounded-full bg-accent-yellow/80 hover:opacity-100 transition-opacity" />
-              <span className="h-3 w-3 rounded-full bg-accent-green/80 hover:opacity-100 transition-opacity" />
+              <span className="h-3 w-3 rounded-full bg-accent-red/80" />
+              <span className="h-3 w-3 rounded-full bg-accent-yellow/80" />
+              <span className="h-3 w-3 rounded-full bg-accent-green/80" />
             </div>
 
-            <div className="hidden sm:flex items-center gap-1 ml-2 border-l border-code-border pl-3">
+            <div
+              role="tablist"
+              aria-label="Contoh alur kerja Git"
+              className="ml-2 hidden items-center gap-1 border-l border-code-border pl-3 sm:flex"
+            >
               {TERMINAL_SNIPPETS.map((snippet) => {
                 const Icon = snippet.icon;
                 const isActive = snippet.id === activeTabId;
                 return (
                   <button
                     key={snippet.id}
+                    id={`${tabBaseId}-tab-${snippet.id}`}
                     type="button"
-                    onClick={() => setActiveTabId(snippet.id)}
+                    role="tab"
+                    aria-selected={isActive}
+                    aria-controls={`${tabBaseId}-panel`}
+                    onClick={() => selectTab(snippet.id)}
                     className={cn(
                       "flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium transition-all",
                       isActive
                         ? "bg-surface text-primary shadow-sm shadow-black/5 dark:bg-surface-low dark:text-primary"
-                        : "text-code-muted hover:text-code-text hover:bg-code-border/40"
+                        : "text-code-muted hover:bg-code-border/40 hover:text-code-text"
                     )}
                   >
                     <Icon className="h-3.5 w-3.5" aria-hidden="true" />
@@ -148,9 +160,9 @@ export function HeroTerminal() {
 
           {/* Right Header: Git Branch & Copy Action */}
           <div className="flex items-center gap-2.5">
-            <div className="flex items-center gap-1.5 rounded-full bg-code-surface px-2.5 py-0.5 text-[11px] font-mono text-code-muted border border-code-border">
+            <div className="flex items-center gap-1.5 rounded-full border border-code-border bg-code-surface px-2.5 py-0.5 font-mono text-[11px] text-code-muted">
               <GitBranch className="h-3 w-3 text-primary" aria-hidden="true" />
-              <span className="text-code-text font-medium">{activeSnippet.branch}</span>
+              <span className="font-medium text-code-text">{activeSnippet.branch}</span>
             </div>
 
             <button
@@ -162,7 +174,7 @@ export function HeroTerminal() {
               {copied ? (
                 <>
                   <Check className="h-3.5 w-3.5 text-accent-green" aria-hidden="true" />
-                  <span className="text-accent-green text-[11px]">Disalin</span>
+                  <span className="text-[11px] text-accent-green">Disalin</span>
                 </>
               ) : (
                 <>
@@ -175,7 +187,11 @@ export function HeroTerminal() {
         </div>
 
         {/* Mobile Tab Selectors */}
-        <div className="flex sm:hidden border-b border-code-border bg-code-surface px-2 py-1.5 gap-1 overflow-x-auto">
+        <div
+          role="tablist"
+          aria-label="Contoh alur kerja Git (mobile)"
+          className="flex gap-1 overflow-x-auto border-b border-code-border bg-code-surface px-2 py-1.5 sm:hidden"
+        >
           {TERMINAL_SNIPPETS.map((snippet) => {
             const Icon = snippet.icon;
             const isActive = snippet.id === activeTabId;
@@ -183,11 +199,14 @@ export function HeroTerminal() {
               <button
                 key={snippet.id}
                 type="button"
-                onClick={() => setActiveTabId(snippet.id)}
+                role="tab"
+                aria-selected={isActive}
+                aria-controls={`${tabBaseId}-panel`}
+                onClick={() => selectTab(snippet.id)}
                 className={cn(
                   "flex items-center gap-1.5 whitespace-nowrap rounded px-2.5 py-1 text-xs font-medium transition-all",
                   isActive
-                    ? "bg-primary/10 text-primary font-semibold"
+                    ? "bg-primary/10 font-semibold text-primary"
                     : "text-code-muted hover:text-code-text"
                 )}
               >
@@ -199,37 +218,42 @@ export function HeroTerminal() {
         </div>
 
         {/* Terminal Body Content */}
-        <div className="p-4 sm:p-6 font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto">
+        <div
+          id={`${tabBaseId}-panel`}
+          role="tabpanel"
+          aria-labelledby={`${tabBaseId}-tab-${activeSnippet.id}`}
+          className="overflow-x-auto p-4 font-mono text-xs leading-relaxed sm:p-6 sm:text-sm"
+        >
           <div className="space-y-4">
             {activeSnippet.commands.map((item, idx) => (
               <div key={idx} className="space-y-1.5">
                 {/* Command Line */}
                 <div className="flex items-center gap-2 font-semibold">
-                  <span className="text-primary select-none font-bold">$</span>
+                  <span className="select-none font-bold text-primary">$</span>
                   <span className="text-code-text">{item.command}</span>
                 </div>
 
                 {/* Output Lines */}
                 {item.output && (
-                  <div className="pl-4 text-code-muted/90 text-xs space-y-0.5 border-l-2 border-primary/20">
+                  <div className="space-y-0.5 border-l-2 border-primary/20 pl-4 text-xs text-code-muted/90">
                     {item.output.map((line, lineIdx) => (
                       <div key={lineIdx} className="leading-snug">
                         {line.startsWith("[main") || line.startsWith("Switched") ? (
                           <span className="text-accent-green">{line}</span>
-                        ) : line.includes("M ") ? (
+                        ) : line.startsWith(" M ") ? (
                           <span>
-                            <span className="text-accent-yellow font-bold">M </span>
-                            {line.replace(" M ", "")}
+                            <span className="font-bold text-accent-yellow">M </span>
+                            {line.slice(3)}
                           </span>
-                        ) : line.includes("A ") ? (
+                        ) : line.startsWith(" A ") ? (
                           <span>
-                            <span className="text-accent-green font-bold">A </span>
-                            {line.replace(" A ", "")}
+                            <span className="font-bold text-accent-green">A </span>
+                            {line.slice(3)}
                           </span>
-                        ) : line.includes("?? ") ? (
+                        ) : line.startsWith("?? ") ? (
                           <span>
-                            <span className="text-accent-red font-bold">?? </span>
-                            {line.replace("?? ", "")}
+                            <span className="font-bold text-accent-red">?? </span>
+                            {line.slice(3)}
                           </span>
                         ) : line.includes("Enumerating") || line.includes("Writing") ? (
                           <span className="text-accent-blue/80">{line}</span>
@@ -242,24 +266,18 @@ export function HeroTerminal() {
                 )}
               </div>
             ))}
-
-            {/* Active blinking terminal prompt */}
-            <div className="flex items-center gap-2 pt-1">
-              <span className="text-primary select-none font-bold">$</span>
-              <span className="h-4 w-2 animate-pulse bg-primary inline-block rounded-sm" />
-            </div>
           </div>
         </div>
 
         {/* Terminal Footer Bar */}
         <div className="flex items-center justify-between border-t border-code-border bg-code-header/60 px-4 py-2 text-[11px] text-code-muted">
           <div className="flex items-center gap-2">
-            <span className="flex h-2 w-2 rounded-full bg-accent-green animate-pulse" aria-hidden="true" />
-            <span className="font-mono">Git status: {activeSnippet.badgeText}</span>
+            <span className="flex h-2 w-2 rounded-full bg-accent-green" aria-hidden="true" />
+            <span className="font-mono">Status: {activeSnippet.badgeText}</span>
           </div>
           <div className="flex items-center gap-1 font-mono text-[10px]">
             <Sparkles className="h-3 w-3 text-primary" aria-hidden="true" />
-            <span>Interactive Git Sandbox</span>
+            <span>Pratinjau Alur Kerja Git</span>
           </div>
         </div>
       </div>

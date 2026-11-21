@@ -27,12 +27,12 @@
   --foreground: 215 28% 12%; /* near-black, ~15.5:1 on white */
   --foreground-muted: 215 12% 36%; /* ~7.3:1 on white */
 
-  --primary: 12 88% 58%; /* Git Orange #F05032 — same in both themes */
+  --primary: 12 82% 43%; /* Deep Git Orange #C83814 — ≥4.5:1 AA on white, surface-low, and primary/10 */
   --primary-foreground: 0 0% 100%;
 
-  --accent-blue: 217 91% 48%; /* darkened from the dark-theme value so it stays ≥4.5:1 on white */
-  --accent-green: 142 71% 32%;
-  --accent-yellow: 38 92% 38%;
+  --accent-blue: 217 91% 48%; /* ≥4.5:1 on white */
+  --accent-green: 142 71% 27%; /* ≥5.2:1 on white and code-surface */
+  --accent-yellow: 36 92% 31%; /* ≥5.3:1 on white */
   --accent-red: 0 72% 45%;
 
   /* Code block surface + syntax token colors — a light, slightly cool
@@ -43,7 +43,7 @@
   --code-header: 220 13% 91%;
   --code-border: 220 13% 85%;
   --code-text: 220 20% 15%;
-  --code-muted: 220 9% 44%; /* comments, prompt sign — ~4.6:1 on --code-surface */
+  --code-muted: 220 10% 38%; /* ≥5.2:1 on --code-header and ~6.0:1 on --code-surface */
   --code-string: 152 62% 30%; /* darkened for contrast on a light surface */
   --code-flag: 205 82% 36%;
 }
@@ -59,8 +59,8 @@
   --foreground: 213 30% 90%; /* #dae3ef */
   --foreground-muted: 213 12% 65%;
 
-  --primary: 12 88% 58%; /* Git Orange #F05032 */
-  --primary-foreground: 0 0% 100%;
+  --primary: 12 88% 58%; /* Vibrant Git Orange #F25B36 — ≥5.2:1 on dark surfaces */
+  --primary-foreground: 210 33% 7%; /* Dark ink on bright primary CTA — 5.69:1 AA */
 
   --accent-blue: 217 100% 74%;
   --accent-green: 142 71% 45%;

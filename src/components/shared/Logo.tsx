@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useId } from "react";
 
 export interface LogoProps extends React.SVGProps<SVGSVGElement> {
   className?: string;
@@ -10,6 +10,8 @@ export interface LogoProps extends React.SVGProps<SVGSVGElement> {
  * Represents a modern Git branch and commit network inside a sleek gradient container.
  */
 export function Logo({ className = "h-6 w-6", size, ...props }: LogoProps) {
+  const gradientId = useId();
+
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -22,14 +24,14 @@ export function Logo({ className = "h-6 w-6", size, ...props }: LogoProps) {
       {...props}
     >
       <defs>
-        <linearGradient id="gm-logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="#F1502F" />
           <stop offset="100%" stopColor="#DF3813" />
         </linearGradient>
       </defs>
 
       {/* Rounded Squircle Background */}
-      <rect width="32" height="32" rx="7" fill="url(#gm-logo-grad)" />
+      <rect width="32" height="32" rx="7" fill={`url(#${gradientId})`} />
 
       {/* Main Commit Trunk Line */}
       <line

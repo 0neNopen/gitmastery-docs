@@ -9,6 +9,8 @@ import {
   type ReactNode,
 } from "react";
 
+import { safeGetStorageItem, safeSetStorageItem } from "@/lib/utils/storage";
+
 interface SidebarContextValue {
   /** Mobile drawer (below `lg:`) — open/closed. */
   isOpen: boolean;
@@ -44,14 +46,14 @@ export function SidebarProvider({ children }: { children: ReactNode }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   useEffect(() => {
-    const stored = window.localStorage.getItem(COLLAPSE_STORAGE_KEY);
+    const stored = safeGetStorageItem(COLLAPSE_STORAGE_KEY);
     if (stored === "true") setIsCollapsed(true);
   }, []);
 
   function toggleCollapsed() {
     setIsCollapsed((current) => {
       const next = !current;
-      window.localStorage.setItem(COLLAPSE_STORAGE_KEY, String(next));
+      safeSetStorageItem(COLLAPSE_STORAGE_KEY, String(next));
       return next;
     });
   }
