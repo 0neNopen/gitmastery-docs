@@ -78,11 +78,11 @@ export function Sidebar({ groups, primaryLinks = [] }: SidebarProps) {
         inert={isCollapsed || undefined}
         aria-hidden={isCollapsed}
         className={cn(
-          "sticky top-16 hidden h-[calc(100vh-4rem)] shrink-0 overflow-y-auto border-foreground/10 py-6 transition-[width,border-color] duration-200 ease-in-out lg:block",
-          isCollapsed ? "w-0 overflow-hidden border-r-0 py-0" : "w-64 border-r"
+          "sticky top-16 hidden h-[calc(100vh-4rem)] shrink-0 overflow-y-auto overflow-x-hidden border-foreground/10 py-6 transition-[width,border-color] duration-200 ease-in-out lg:block",
+          isCollapsed ? "w-0 overflow-hidden border-r-0 py-0" : "w-64 border-r xl:w-72"
         )}
       >
-        <div className={cn("w-64", isCollapsed && "invisible")}>
+        <div className={cn(isCollapsed ? "invisible w-64 xl:w-72" : "w-full min-w-0")}>
           <SidebarNav groups={groups} />
         </div>
       </aside>

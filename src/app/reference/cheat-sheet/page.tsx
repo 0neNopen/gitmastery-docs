@@ -30,7 +30,12 @@ export default function CheatSheetPage() {
   }));
 
   return (
-    <DocsLayout primaryNavLinks={primaryNavLinks} footerColumns={footerColumns} headings={headings}>
+    <DocsLayout
+      primaryNavLinks={primaryNavLinks}
+      footerColumns={footerColumns}
+      headings={headings}
+      wideContent
+    >
       <Breadcrumb
         items={[
           { label: "Dokumentasi", href: "/" },
@@ -68,7 +73,7 @@ export default function CheatSheetPage() {
               <TableBody>
                 {section.rows.map((row) => (
                   <TableRow key={row.command}>
-                    <TableCell className="whitespace-nowrap font-mono text-sm font-medium text-primary">
+                    <TableCell className="font-mono text-sm font-medium text-primary lg:whitespace-nowrap">
                       {row.command}
                     </TableCell>
                     <TableCell className="text-foreground-muted">{row.description}</TableCell>

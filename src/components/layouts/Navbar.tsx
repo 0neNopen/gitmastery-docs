@@ -17,6 +17,8 @@ export interface NavbarProps {
   primaryLinks: NavLink[];
   /** Docs pages render the sidebar controls here (drawer trigger on mobile, collapse toggle on desktop); the homepage has no sidebar, so it opts out of both. */
   hasSidebar?: boolean;
+  /** Edge-to-edge layout for docs pages so logo/controls align flush with the full-bleed Sidebar and TOC. */
+  fullWidth?: boolean;
   /** Optional persistent CTA shown on larger screens. */
   ctaLabel?: string;
   ctaHref?: string;
@@ -35,13 +37,19 @@ export interface NavbarProps {
 export function Navbar({
   primaryLinks,
   hasSidebar = true,
+  fullWidth = false,
   ctaLabel,
   ctaHref,
   githubHref,
 }: NavbarProps) {
   return (
     <header className="sticky top-0 z-40 h-16 w-full border-b border-foreground/10 bg-surface/80 backdrop-blur-xl">
-      <div className="mx-auto flex h-full w-full max-w-7xl items-center gap-3 px-4 sm:gap-4 sm:px-6 lg:px-8">
+      <div
+        className={cn(
+          "flex h-full w-full items-center gap-3 px-4 sm:gap-4 sm:px-6 lg:px-8",
+          !fullWidth && "mx-auto max-w-7xl"
+        )}
+      >
         {hasSidebar && (
           <>
             {/* Exactly one of these two is visible at any given width */}

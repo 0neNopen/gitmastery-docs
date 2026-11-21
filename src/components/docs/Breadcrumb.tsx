@@ -17,7 +17,7 @@ export function Breadcrumb({ items }: BreadcrumbProps) {
   if (items.length === 0) return null;
 
   return (
-    <nav aria-label="Navigasi breadcrumb" className="mb-6">
+    <nav aria-label="Navigasi breadcrumb" className="not-prose mb-6">
       <ol className="flex flex-wrap items-center gap-1.5 text-xs sm:text-sm text-foreground-muted">
         {items.map((item, index) => {
           const isLast = index === items.length - 1;
